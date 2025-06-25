@@ -13,7 +13,11 @@ export class PostagemService {
   //Adicionar método como promessa com async para classe 'postagem'
   //Método listar tudo
   async findAll(): Promise<Postagem[]> {
-    return await this.postagemRepository.find();
+    return await this.postagemRepository.find({
+      relations: {
+        tema: true,
+      },
+    });
   }
 
   //Método listar por id
@@ -21,6 +25,9 @@ export class PostagemService {
     const postagem = await this.postagemRepository.findOne({
       where: {
         id,
+      },
+      relations: {
+        tema: true,
       },
     });
 
@@ -37,6 +44,9 @@ export class PostagemService {
     return await this.postagemRepository.find({
       where: {
         titulo: ILike(`%${titulo}%`),
+      },
+      relations: {
+        tema: true,
       },
     });
   }
