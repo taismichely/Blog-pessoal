@@ -1,4 +1,3 @@
-import { Usuario } from './usuario.entity';
 import { IsEmail, IsNotEmpty, MinLength } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Postagem } from '../../postagem/entities/postagem.entity';
