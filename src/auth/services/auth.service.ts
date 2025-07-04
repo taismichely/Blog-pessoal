@@ -13,7 +13,7 @@ export class AuthService {
   ) {}
 
   async validateUser(username: string, password: string): Promise<any> {
-    const buscaUsuario = await this.usuarioService(username);
+    const buscaUsuario = await this.usuarioService.findByUsuario(username);
 
     if (!buscaUsuario)
       throw new HttpException('Usuário não encontrado!', HttpStatus.NOT_FOUND);
@@ -23,6 +23,7 @@ export class AuthService {
       buscaUsuario.senha,
     );
     if (buscaUsuario && matchPassword) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const { senha, ...resposta } = buscaUsuario;
       return resposta;
     }
