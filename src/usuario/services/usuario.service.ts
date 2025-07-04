@@ -12,7 +12,7 @@ export class UsuarioService {
     private bcrypt: Bcrypt,
   ) {}
 
-  async findByUsuario(usuario: string): Promise<Usuario | undefined> {
+  async findByUsuario(usuario: string): Promise<Usuario | null> {
     return await this.usuarioRepository.findOne({
       where: {
         usuario: usuario,
@@ -51,7 +51,10 @@ export class UsuarioService {
     const buscaUsuario = await this.findByUsuario(usuario.usuario);
 
     if (buscaUsuario && buscaUsuario.id !== usuario.id)
-      throw new HttpException( 'Usuário (e-mail) já cadastrado', HttpStatus.BAD_REQUEST );
+      throw new HttpException(
+        'Usuário (e-mail) já cadastrado',
+        HttpStatus.BAD_REQUEST,
+      );
 
     usuario.senha = await this.bcrypt.criptografarSenha(usuario.senha);
     return await this.usuarioRepository.save(usuario);
